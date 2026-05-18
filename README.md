@@ -28,4 +28,4 @@ A weather app built with React, Tailwind CSS and OpenWeatherMap API.
 - React
 - Tailwind CSS
 - OpenWeatherMap API
-- Vite
+- Vite# mehmet-dev
