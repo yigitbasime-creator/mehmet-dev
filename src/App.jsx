@@ -4,6 +4,10 @@ import Home from "./pages/Home";
 import Weather from "./pages/Weather";
 import About from "./pages/About";
 import Projects from "./pages/Projects";
+import Todos from "./pages/Todos";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
 
 const App = () => {
   return (
@@ -15,6 +19,9 @@ const App = () => {
           <Route path="/weather" element={<Weather />} />
           <Route path="/about" element={<About />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/todos" element={<Todos />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} /> 
         </Routes>
       </div>
     </BrowserRouter>
