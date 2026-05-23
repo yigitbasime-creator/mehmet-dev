@@ -12,7 +12,7 @@ import Register from "./pages/Register";
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-900 text-white">
+      <div className="min-h-screen" style={{background: "#fdf6f3", color: "#3d2a52"}}>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />

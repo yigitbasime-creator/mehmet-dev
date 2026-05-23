@@ -20,30 +20,34 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 px-6 py-4 flex gap-6 items-center">
+    <nav style={{background: "#dfd3cc", borderBottom: "0.5px solid #8a817e"}} className="px-6 py-4 flex gap-6 items-center">
       <span className="text-white font-bold text-lg mr-4">⚛️ Mehmet's App</span>
       {links.map(({ path, label }) => (
-        <Link
-          key={path}
-          to={path}
-          className={`text-sm font-medium transition-colors ${
-            pathname === path
-              ? "text-blue-400 border-b-2 border-blue-400 pb-1"
-              : "text-gray-300 hover:text-white"
-          }`}>
-          {label}
-        </Link>
+
+      <Link
+        to={path}
+        key={path}
+        className={pathname === path ? "border-b-2 pb-1" : "hover:opacity-80"}
+        style={{
+          color: pathname === path ? "#d4537e" : "#9b8ec4",
+          borderColor: pathname === path ? "#d4537e" : "transparent"
+        }}
+      >
+        {label}
+      </Link>
+
       ))}
+
       <div className="ml-auto flex items-center gap-4">
         {user && (
-          <span className="text-gray-400 text-sm">
-            👋 {user.name}
+          <span className="text-sm" style={{color: "#3d2a52"}}>
+            {user.name}
           </span>
         )}
         {user ? (
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-medium transition-colors">
+            className="px-4 py-2 rounded-lg text-sm font-medium transition-colors" style={{background: "#d4537e", color: "#fbeaf0"}}>
             Logout
           </button>
         ) : (

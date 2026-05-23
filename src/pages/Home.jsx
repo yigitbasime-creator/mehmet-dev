@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4">
-      <h1 className="text-5xl font-bold text-white mb-4">
+      <h1 className="text-5xl font-bold mb-4" style={{color: "#776e81"}}>
         👋 Merhaba!
       </h1>
       <p className="text-gray-400 text-xl mb-8 max-w-md">

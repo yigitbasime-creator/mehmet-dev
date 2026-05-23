@@ -18,14 +18,13 @@ const Todos = () => {
     "Authorization": `Bearer ${token}`
   };
 
+useEffect(() => {
+  if (!token) { navigate("/login"); return; }
+
   const fetchTodos = async () => {
     try {
       const response = await fetch(`${API}/todos`, { headers });
-      if (response.status === 401) {
-        logout();
-        navigate("/login");
-        return;
-      }
+      if (response.status === 401) { logout(); navigate("/login"); return; }
       const data = await response.json();
       setTodos(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -35,15 +34,11 @@ const Todos = () => {
     }
   };
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-    fetchTodos();
-  }, []);
+  fetchTodos();
+}, [token]);
 
-  const addTodo = async () => {
+
+  const addTodo = async () => {           // ✅ BUG 2 FIXED: was },' [token]; should be };
     if (!input.trim()) return;
     try {
       const response = await fetch(`${API}/todos`, {
@@ -75,7 +70,8 @@ const Todos = () => {
 
   const deleteTodo = async (id) => {
     try {
-      await fetch(`${API}/todos/${id}`, { method: "DELETE", headers });
+      const response = await fetch(`${API}/todos/${id}`, { method: "DELETE", headers });
+      if (!response.ok) throw new Error("Delete failed");
       setTodos(todos.filter(t => t._id !== id));
     } catch (err) {
       setError("Could not delete todo!");
@@ -84,7 +80,7 @@ const Todos = () => {
 
   return (
     <div className="max-w-md mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold text-white text-center mb-6">
+      <h2 className="text-3xl font-bold text-center mb-6" style={{color: "#3d2a52"}}>
         📝 Fullstack Todos
       </h2>
 
@@ -94,33 +90,36 @@ const Todos = () => {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && addTodo()}
           placeholder="Add a task..."
-          className="flex-1 px-4 py-3 rounded-xl bg-gray-800 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+          className="flex-1 px-4 py-3 rounded-xl border focus:outline-none"
+          style={{ background: "#fff8f5", borderColor: "#e8d5ce", color: "#3d2a52" }}
         />
         <button
           onClick={addTodo}
-          className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-xl font-semibold transition-colors">
+          className="px-6 py-3 rounded-xl font-semibold"
+          style={{ background: "#d4537e", color: "#fbeaf0" }}
+        >
           Add
         </button>
       </div>
 
-      {error && <p className="text-red-400 text-center mb-4">{error}</p>}
-      {loading && <p className="text-gray-400 text-center">⏳ Loading...</p>}
+      {error && <p className="text-center mb-4" style={{color: "#d4537e"}}>{error}</p>}
+      {loading && <p className="text-center" style={{color: "#9b8ec4"}}>⏳ Loading...</p>}
 
       <ul className="space-y-3">
         {todos.map(todo => (
-          <li
-            key={todo._id}
-            className="flex items-center justify-between bg-gray-800 rounded-xl px-4 py-3 border border-gray-700">
+          <li key={todo._id}
+            className="flex items-center justify-between rounded-xl px-4 py-3 border"
+            style={{ background: "#fff8f5", borderColor: "#e8d5ce" }}>
             <span
               onClick={() => toggleTodo(todo._id, todo.done)}
-              className={`flex-1 cursor-pointer ${
-                todo.done ? "line-through text-gray-500" : "text-white"
-              }`}>
+              className="flex-1 cursor-pointer"
+              style={{ color: todo.done ? "#c4b0d0" : "#3d2a52",   // ✅ BUG 3 FIXED: was text-white
+                       textDecoration: todo.done ? "line-through" : "none" }}>
               {todo.text}
             </span>
             <button
               onClick={() => deleteTodo(todo._id)}
-              className="ml-4 text-red-400 hover:text-red-300 transition-colors">
+              className="ml-4 transition-colors">
               ❌
             </button>
           </li>
@@ -128,7 +127,7 @@ const Todos = () => {
       </ul>
 
       {todos.length > 0 && (
-        <p className="text-gray-400 text-center mt-6">
+        <p className="text-center mt-6" style={{color: "#9b8ec4"}}>
           ✅ {todos.filter(t => t.done).length} of {todos.length} completed
         </p>
       )}
