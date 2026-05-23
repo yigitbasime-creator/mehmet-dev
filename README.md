@@ -1,31 +1,96 @@
-# React + Vite
+# Mehmet's Fullstack React App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fullstack web application built during a React.js + Node.js bootcamp.
+Live at: https://gilded-meringue-6f2a62.netlify.app
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Frontend**
+- React 18 + Vite
+- React Router v6
+- Tailwind CSS + inline styles (light coral & lavender palette)
+- Context API for auth state
 
-## React Compiler
+**Backend**
+- Node.js + Express
+- MongoDB + Mongoose
+- JWT Authentication
+- Live at: https://my-backend-cu5k.onrender.com
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Pages
 
-## Expanding the ESLint configuration
+| Page | Route | Description |
+|---|---|---|
+| Home | `/` | Landing page with navigation cards |
+| Login | `/login` | JWT login form |
+| Register | `/register` | New user registration |
+| Todos | `/todos` | Full CRUD todo list (protected) |
+| Weather | `/weather` | External API weather lookup |
+| Projects | `/projects` | Project showcase |
+| About | `/about` | Developer info |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Features Built
 
-# React Weather App 🌤️
+- [x] JWT Authentication (login, register, logout)
+- [x] Protected routes (redirect to /login if no token)
+- [x] Full CRUD Todos connected to MongoDB
+- [x] 401 auto-logout handling
+- [x] Loading & error states on all async calls
+- [x] Light coral & lavender design palette
+- [ ] GitHub profile component (in progress)
 
-A weather app built with React, Tailwind CSS and OpenWeatherMap API.
+## Color Palette
 
-## Features
-- Search weather by city
-- Toggle between °C and °F
-- Real-time weather data
+```
+Background:     #fdf6f3  (warm white)
+Navbar bg:      #f5ede8  (soft peach)
+Primary text:   #3d2a52  (deep plum)
+Muted text:     #9b8ec4  (lavender)
+Accent/buttons: #d4537e  (coral rose)
+Button text:    #fbeaf0  (blush white)
+Card bg:        #fff8f5  (soft white)
+Card border:    #e8d5ce  (warm grey)
+```
 
-## Built with
-- React
-- Tailwind CSS
-- OpenWeatherMap API
-- Vite# mehmet-dev
+## Project Structure
+
+```
+my-react-app/
+├── src/
+│   ├── components/
+│   │   └── Navbar.jsx
+│   ├── context/
+│   │   └── AuthContext.jsx
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   ├── Todos.jsx
+│   │   ├── Weather.jsx
+│   │   ├── Projects.jsx
+│   │   └── About.jsx
+│   ├── App.jsx
+│   └── main.jsx
+├── .env               # VITE_API_URL=https://my-backend-cu5k.onrender.com
+└── package.json
+```
+
+## Environment Variables
+
+```bash
+# .env (frontend)
+VITE_API_URL=https://my-backend-cu5k.onrender.com
+```
+
+## Key Lessons Learned
+
+- Tailwind color classes (`text-white`, `bg-gray-800`) must be replaced with `style={{}}` when applying a custom palette
+- `useEffect` dependencies array must include all values used inside the effect
+- `fetchTodos` should be defined **inside** `useEffect` to avoid ESLint cascading render warnings
+- Always check `response.ok` before updating state on DELETE/PUT calls
+- `npm run dev` only catches syntax errors — ESLint catches code quality issues
+
+## Deployment
+
+- Frontend: Netlify (auto-deploy from GitHub)
+- Backend: Render.com
